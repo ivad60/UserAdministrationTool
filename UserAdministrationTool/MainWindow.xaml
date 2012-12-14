@@ -1,0 +1,55 @@
+﻿<Window x:Class="UserAdministrationTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" DataContext="{Binding Main, Source={StaticResource Locator}}"  Height="450" Width="525">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Connection string"></TextBlock>
+            <TextBox Text="{Binding ConnectionString,Mode=TwoWay}" Width="250"></TextBox>
+           <Button Content="Reset connection" Command="{Binding ResetConnectionCommand}"></Button>
+        </StackPanel>
+        <StackPanel Grid.Column="1" >
+<TextBlock Text="Application name"></TextBlock>
+            <TextBox Text="{Binding ApplicationName,Mode=TwoWay}" Width="250"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <Label Content="Users"></Label>
+            <ListBox Name="Users" Height="100" DisplayMemberPath="UserName" ItemsSource="{Binding Users}" SelectionMode="Multiple" ></ListBox>
+            <Button Name="btnDeleteUser" Command="{Binding DeleteUserCommand}">Delete</Button>
+            <Button Name="btnAddUsersToRoles" Command="{Binding AddUsersToRolesCommand}">Update Roles</Button>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <Label Content="Roles"></Label>
+            <ListBox Name="Roles" Height="100" SelectionMode="Multiple" ItemsSource="{Binding Roles,Mode=TwoWay}"  ></ListBox>
+            <Button Name="btnDeleteRole" Command="{Binding DeleteRoleCommand}">Delete</Button>
+        </StackPanel>
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="New user"></TextBlock>
+            <TextBlock Text="UserName"></TextBlock>
+            <TextBox Name="txtUserName" Text="{Binding UserName,Mode=TwoWay}" ></TextBox>
+            <TextBlock Text="Password"/>
+            <TextBox Name="txtPassword" Text="{Binding Password,Mode=TwoWay}"></TextBox>
+            <TextBlock Text="Email"/>
+            <TextBox Name="txtEmail" Text="{Binding Email,Mode=TwoWay}"></TextBox>
+            <Button Name="btnAddUser" Command="{Binding AddUserCommand}">Add</Button>
+            
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="2">
+            <TextBlock Text="Add role"></TextBlock>
+            <TextBlock Text="Role name"></TextBlock>
+            <TextBox Name="txtRoleName" Text="{Binding NewRoleName,Mode=TwoWay}"></TextBox>
+            <Button Name="btnAddRole" Command="{Binding AddRoleCommand}">Add</Button>
+        </StackPanel>
+
+    </Grid>
+</Window>
