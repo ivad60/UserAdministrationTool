@@ -10,7 +10,28 @@ namespace UserAdministrationTool.Services
 {
     public class MemberShipService : IMembershipService
     {
+        private readonly MembershipSection _membershipSection;
+        private readonly ProviderSettings _memberShipSettingsProvider;
+        private readonly RoleManagerSection _roleManagerSection;
+        private readonly ProviderSettings _roleProviderSettings;
 
+        private readonly NameValueCollection _membershipParameters;
+        private readonly NameValueCollection _rolemanagerParameters;
+
+        public MemberShipService()
+        {
+            _membershipSection = (MembershipSection)ConfigurationManager.GetSection("system.web/membership");
+
+            _memberShipSettingsProvider = _membershipSection.Providers[_membershipSection.DefaultProvider];
+            _roleManagerSection = (RoleManagerSection)ConfigurationManager.GetSection("system.web/roleManager");
+            _roleProviderSettings = _roleManagerSection.Providers[_roleManagerSection.DefaultProvider];
+
+            _membershipParameters = _memberShipSettingsProvider.Parameters;
+            _rolemanagerParameters = _roleProviderSettings.Parameters;
+
+        }
+
+      
 
         public MembershipUserCollection GetUsers()
         {
@@ -73,17 +94,37 @@ namespace UserAdministrationTool.Services
         public void ResetConnection()
         {
 
-            var section = (MembershipSection)ConfigurationManager.GetSection("system.web/membership");
+            var membershipParameters = CopyMembershipParameters();
 
-            var provider = section.Providers[section.DefaultProvider];
-            Membership.Provider.Initialize(section.DefaultProvider, provider.Parameters);
+            Membership.Provider.Initialize(_membershipSection.DefaultProvider, membershipParameters);
 
-            var roleSection = (RoleManagerSection)ConfigurationManager.GetSection("system.web/roleManager");
 
-            var roleProvider = roleSection.Providers[roleSection.DefaultProvider];
-            Roles.Provider.Initialize(roleSection.DefaultProvider, roleProvider.Parameters);
+            var roleParameters = CopyRoleParameters();
+
+            Roles.Provider.Initialize(_roleManagerSection.DefaultProvider, roleParameters);
 
         }
 
+        private NameValueCollection CopyMembershipParameters()
+        {
+            var membershipParameters = new NameValueCollection();
+
+            foreach (var parameter in _membershipParameters.AllKeys)
+            {
+                membershipParameters.Add(parameter, _membershipParameters[parameter]);
+            }
+            return membershipParameters;
+        }
+
+        private NameValueCollection CopyRoleParameters()
+        {
+            var roleParameters = new NameValueCollection();
+
+            foreach (var parameter in _rolemanagerParameters.AllKeys)
+            {
+                roleParameters.Add(parameter, _rolemanagerParameters[parameter]);
+            }
+            return roleParameters;
+        }
     }
 }

@@ -15,8 +15,8 @@ namespace UserAdministrationTool
         {
             FieldInfo isInitialized = GetType().BaseType.BaseType.BaseType.GetField("_Initialized", BindingFlags.Instance | BindingFlags.NonPublic);
             isInitialized.SetValue(this, false);
-            base.Initialize(name, config);
 
+            base.Initialize(name, config);
             
 
             var connectionString = StaticConnectionString.Instance.ConnectionString;
@@ -25,7 +25,7 @@ namespace UserAdministrationTool
             connectionStringField.SetValue(this, connectionString);
 
             base.ApplicationName = StaticConnectionString.Instance.ApplicationName;
-
+            
         }
     }
 }

@@ -16,7 +16,7 @@
         <StackPanel Orientation="Vertical">
             <TextBlock Text="Connection string"></TextBlock>
             <TextBox Text="{Binding ConnectionString,Mode=TwoWay}" Width="250"></TextBox>
-           <Button Content="Reset connection" Command="{Binding ResetConnectionCommand}"></Button>
+           <Button Content="Load database" Command="{Binding ResetConnectionCommand}"></Button>
         </StackPanel>
         <StackPanel Grid.Column="1" >
 <TextBlock Text="Application name"></TextBlock>

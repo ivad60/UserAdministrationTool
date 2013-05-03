@@ -15,10 +15,10 @@ namespace UserAdministrationTool
         protected override void OnStartup(StartupEventArgs e)
         {
 
-            //TODO: Set connectionstring at login from user input, or something
-            StaticConnectionString.Instance.ConnectionString =
-                ConfigurationManager.ConnectionStrings["membershipConnectionString"].ConnectionString;
-            StaticConnectionString.Instance.ApplicationName = "controlPanel";
+            
+            //StaticConnectionString.Instance.ConnectionString =
+            //    ConfigurationManager.ConnectionStrings["membershipConnectionString"].ConnectionString;
+            
 
         }
     }
